@@ -1,0 +1,20 @@
+.Dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.Dialogs .DialogsItem {
+    padding: 10px;
+}
+
+.Dialogs .DialogsItem .Dialog {
+
+}
+
+.Dialogs .MessegesItem {
+    padding: 10px;
+}
+
+.Dialogs .MessegesItem .Messege {
+
+}
