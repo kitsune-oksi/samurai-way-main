@@ -24,7 +24,7 @@ const Messege = (props: MessegeType) => {
     )
 }
 
-export const Dialogs= () => {
+export const Dialogs = () => {
     type UserType = {
         id: number,
         name: string
@@ -48,18 +48,17 @@ export const Dialogs= () => {
         {id: 4, message: 'I love u'}
     ]
 
+    const dialogsData = users.map(u => <Dialog id={u.id} name={u.name}/>)
+
+    const messageData = messages.map((m => <Messege messege={m.message}/>))
+
     return (
         <div className={d.Dialogs}>
             <div className={d.DialogsItem}>
-                <Dialog id={users[0].id} name={users[0].name}/>
-                <Dialog id={users[1].id} name={users[1].name}/>
-                <Dialog id={users[2].id} name={users[2].name}/>
+                {dialogsData}
             </div>
             <div className={d.MessegesItem}>
-                <Messege messege={messages[0].message}/>
-                <Messege messege={messages[1].message}/>
-                <Messege messege={messages[2].message}/>
-                <Messege messege={messages[3].message}/>
+                {messageData}
             </div>
         </div>
     )
