@@ -1,54 +1,18 @@
 import React from 'react';
 import d from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
+import {DialogsItem} from "./DialogsItem/DialogsItem";
+import {Messege} from "./Message/Message";
+import {MessagesType, UserType} from "../../redux/state";
 
-type DialogType = {
-    id: number
-    name: string
+type DialogsPropsType = {
+    users: UserType[]
+    messages: MessagesType[]
 }
 
-type MessegeType = {
-    messege: string
-}
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
+    const {users, messages} = props
 
-const Dialog = (props: DialogType) => {
-    let path = `/Dialogs/${props.id}`
-    return (
-        <div className={d.Dialog}><NavLink to={path}>{props.name}</NavLink></div>
-    )
-}
-
-const Messege = (props: MessegeType) => {
-    return (
-        <div className={d.Messege}>{props.messege}</div>
-    )
-}
-
-export const Dialogs = () => {
-    type UserType = {
-        id: number,
-        name: string
-    }
-
-    type MessagesType = {
-        id: number
-        message: string
-    }
-
-    const users: UserType[] = [
-        {id: 1, name: 'Игорь'},
-        {id: 2, name: 'Марселин'},
-        {id: 3, name: 'Чуча'}
-    ]
-
-    const messages: MessagesType[] = [
-        {id: 1, message: 'Hey'},
-        {id: 2, message: 'Wazzap'},
-        {id: 3, message: 'U r hot'},
-        {id: 4, message: 'I love u'}
-    ]
-
-    const dialogsData = users.map(u => <Dialog id={u.id} name={u.name}/>)
+    const dialogsData = users.map(u => <DialogsItem id={u.id} name={u.name}/>)
 
     const messageData = messages.map((m => <Messege messege={m.message}/>))
 
