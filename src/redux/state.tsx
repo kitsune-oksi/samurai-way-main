@@ -12,7 +12,7 @@ export type MessagesType = {
 
 export type PostType = {
     id: number
-    post: string
+    post: string | undefined
 }
 
 type dialogsPageType = {
@@ -21,6 +21,7 @@ type dialogsPageType = {
 }
 export type postsType = {
     posts:PostType[]
+    newPostMessage: string
 }
 
 
@@ -47,15 +48,22 @@ export const state: StateType = {
     profilePage: {
         posts: [
             {id: 1, post: 'Hello world'}
-        ]
+        ],
+        newPostMessage: ''
     }
 }
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     const newPost: PostType = {
         id: state.profilePage.posts.length+1,
-        post: postMessage
+        post: state.profilePage.newPostMessage
     }
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostMessage = '';
+    renderEntireTree(state);
+}
+
+export const newPostText = (newText: string) => {
+    state.profilePage.newPostMessage = newText;
     renderEntireTree(state);
 }
