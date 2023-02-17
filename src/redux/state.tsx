@@ -1,4 +1,6 @@
-import {renderEntireTree} from "../render";
+let renderEntireTree = () => {
+    console.log('State changed')
+}
 
 export type UserType = {
     id: number,
@@ -12,7 +14,7 @@ export type MessagesType = {
 
 export type PostType = {
     id: number
-    post: string
+    post: string | undefined
 }
 
 type dialogsPageType = {
@@ -20,7 +22,8 @@ type dialogsPageType = {
     messages: MessagesType[]
 }
 export type postsType = {
-    posts:PostType[]
+    posts: PostType[]
+    newPostMessage: string
 }
 
 
@@ -47,15 +50,26 @@ export const state: StateType = {
     profilePage: {
         posts: [
             {id: 1, post: 'Hello world'}
-        ]
+        ],
+        newPostMessage: ''
     }
 }
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     const newPost: PostType = {
-        id: state.profilePage.posts.length+1,
-        post: postMessage
+        id: state.profilePage.posts.length + 1,
+        post: state.profilePage.newPostMessage
     }
     state.profilePage.posts.push(newPost);
-    renderEntireTree(state);
+    state.profilePage.newPostMessage = '';
+    renderEntireTree();
+}
+
+export const newPostText = (newText: string) => {
+    state.profilePage.newPostMessage = newText;
+    renderEntireTree();
+}
+
+export const subscribe = (observer: () => void) => {
+    renderEntireTree = observer
 }
