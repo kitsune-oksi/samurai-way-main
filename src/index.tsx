@@ -1,5 +1,16 @@
-import React from 'react';
-import {renderEntireTree} from "./render";
-import {state, StateType} from "./redux/state";
+import {state, subscribe} from "./redux/state";
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import {addPost, newPostText} from "./redux/state";
 
-renderEntireTree(state)
+const renderEntireTree = () => {
+    ReactDOM.render(
+        <App addPost = {addPost} state={state} newPostText={newPostText}/>,
+        document.getElementById('root')
+    );
+}
+
+renderEntireTree()
+
+subscribe(renderEntireTree)
