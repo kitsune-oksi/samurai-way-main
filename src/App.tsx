@@ -8,10 +8,11 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {StoreType} from "./redux/state";
+import {ActionType, StoreType} from "./redux/state";
 
 type AppPropsType = {
     store: StoreType
+    dispatch: (action: ActionType) => void
 }
 
 function App(props: AppPropsType) {
@@ -23,8 +24,8 @@ function App(props: AppPropsType) {
                 <Header/>
                 <Navbar/>
                 <div className='app-content'>
-                    <Route path='/Profile' render={()=> <Profile addPost={store.addPost.bind(store)} profilePage={state.profilePage} newPostText={store.newPostText.bind(store)}/>}/>
-                    <Route path='/Dialogs' render={()=> <Dialogs users={state.dialogsPage.users} messages={state.dialogsPage.messages}/>}/>
+                    <Route path='/Profile' render={()=> <Profile profilePage={state.profilePage} dispatch={store.dispatch.bind(store)}/>}/>
+                    <Route path='/Dialogs' render={()=> <Dialogs dialogsPage={state.dialogsPage} dispatch={store.dispatch.bind(store)}/>}/>
                     <Route path='/News' render={()=> <News/>}/>
                     <Route path='/Music' render={()=> <Music/>}/>
                     <Route path='/Settings' render={()=> <Settings/>}/>
