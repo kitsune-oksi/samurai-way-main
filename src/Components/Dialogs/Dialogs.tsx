@@ -1,20 +1,29 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import d from './Dialogs.module.css'
 import {DialogsItem} from "./DialogsItem/DialogsItem";
 import {Messege} from "./Message/Message";
-import {MessagesType, UserType} from "../../redux/state";
+import {ActionType, dialogsPageType, sendNewMessage, updateNewMessageTextActionCreator} from "../../redux/state";
+import {Button} from "../../Button/Button";
 
 type DialogsPropsType = {
-    users: UserType[]
-    messages: MessagesType[]
+    dialogsPage: dialogsPageType
+    dispatch: (action: ActionType) => void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-    const {users, messages} = props
+    const {users, messages, newMessageText} = props.dialogsPage
 
     const dialogsData = users.map(u => <DialogsItem id={u.id} name={u.name}/>)
-
     const messageData = messages.map((m => <Messege messege={m.message}/>))
+
+    const sendMessageHandler = () => {
+        props.dispatch(sendNewMessage())
+    }
+
+    const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        let text = event.currentTarget.value
+        props.dispatch(updateNewMessageTextActionCreator(text))
+    }
 
     return (
         <div className={d.Dialogs}>
@@ -23,6 +32,10 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
             </div>
             <div className={d.MessegesItem}>
                 {messageData}
+                <div>
+                    <textarea value={newMessageText} onChange={onChangeHandler}/>
+                    <Button title='Send message' callback={sendMessageHandler}/>
+                </div>
             </div>
         </div>
     )

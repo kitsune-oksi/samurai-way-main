@@ -1,24 +1,23 @@
 import React, {ChangeEvent} from 'react';
 import {Button} from "../../../Button/Button";
-import {PostType} from "../../../redux/state";
+import {ActionType, addPostActionCreator, PostType, updateNewPostActionCreator} from "../../../redux/state";
 import {Posts} from "./Posts";
 
 type MyPostsType = {
-    addPost: () => void
+    dispatch: (action: ActionType) => void
     posts: PostType[]
     newPostMessage: string
-    newPostText: (newText: string)=>void
 }
 
 export const MyPosts = (props: MyPostsType) => {
 
     const addPostHandler = () => {
-            props.addPost()
+            props.dispatch(addPostActionCreator())
         }
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value;
-        props.newPostText(text)
+        props.dispatch(updateNewPostActionCreator(text))
     }
 
     return (
