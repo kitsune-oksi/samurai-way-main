@@ -1,10 +1,5 @@
-import ProfileReducer from "./ProfileReducer";
-import DialogsReducer from "./DialogsReducer";
-
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-const SEND_NEW_MESSAGE = 'SEND-NEW-MESSAGE';
+import {AddPostType, ProfileReducer, UpdateNewPostType} from "./ProfileReducer";
+import {DialogsReducer, SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 
 export type UserType = {
     id: number,
@@ -37,24 +32,6 @@ export type StateType = {
     profilePage: postsType
 }
 
-type AddPostType = {
-    type: typeof ADD_POST
-}
-
-type SendNewMessageType = {
-    type: typeof SEND_NEW_MESSAGE
-}
-
-type UpdateNewPostType = {
-    type: typeof UPDATE_NEW_POST_TEXT
-    newText: string
-}
-
-type UpdateNewMessageType = {
-    type: typeof UPDATE_NEW_MESSAGE_TEXT
-    newText: string
-}
-
 export type ActionType = AddPostType | UpdateNewPostType | UpdateNewMessageType | SendNewMessageType
 
 export type StoreType = {
@@ -64,22 +41,6 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     dispatch: (action: ActionType) => void
 }
-
-export const addPostActionCreator = (): AddPostType => ({
-    type: ADD_POST
-})
-export const updateNewPostActionCreator = (text: string): UpdateNewPostType => ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText: text
-})
-
-export const sendNewMessageActionCreator = (): SendNewMessageType => ({
-    type: SEND_NEW_MESSAGE
-})
-export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageType => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
-    newText: text
-})
 
 export let store: StoreType = {
     _state: {
