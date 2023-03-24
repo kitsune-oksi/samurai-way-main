@@ -1,10 +1,11 @@
-import {PostType} from "../../../redux/state";
+import {PostType} from "../../../redux/store";
 
 type PostsPropsType = {
     posts: PostType[]
 }
 
 export const Posts = (props: PostsPropsType) => {
+    debugger
     return (
         <div>
             {props.posts.map(el => {
