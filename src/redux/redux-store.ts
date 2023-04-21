@@ -1,8 +1,45 @@
 import {combineReducers, createStore} from "redux";
-import {ProfileReducer} from "./ProfileReducer";
-import {DialogsReducer} from "./DialogsReducer";
+import {AddPostType, ProfileReducer, UpdateNewPostType} from "./ProfileReducer";
+import {DialogsReducer, SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 
-const reducers = combineReducers({
+// type ReducersType = typeof rootReducer;
+// export type ReduxStoreType = ReturnType<ReducersType>;
+
+// типизация всего нашего стейта
+// аналогично
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
+export type ActionType = AddPostType | UpdateNewPostType | UpdateNewMessageType | SendNewMessageType
+
+export type PostType = {
+    id: number
+    post: string | undefined
+}
+
+export type ProfilePageType = {
+    posts: PostType[]
+    newPostMessage: string
+}
+
+type UserType = {
+    id: number,
+    name: string
+}
+
+export type MessagesType = {
+    id: number
+    message: string
+}
+
+export type DialogsPageType = {
+    users: UserType[]
+    messages: MessagesType[]
+    newMessageText: string
+}
+
+const rootReducer = combineReducers({
     dialogsPage: DialogsReducer,
     profilePage: ProfileReducer
 });
@@ -10,8 +47,5 @@ const reducers = combineReducers({
 // ProfileReducer,
 // DialogsReducer
 
-type ReducersType = typeof reducers;
-export type ReduxStoreType = ReturnType<ReducersType>;
-
-export let store = createStore(reducers);
+export let store = createStore(rootReducer);
 
