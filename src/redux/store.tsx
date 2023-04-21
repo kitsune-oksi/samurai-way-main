@@ -1,40 +1,40 @@
 import {AddPostType, UpdateNewPostType} from "./ProfileReducer";
 import {SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 
-export type UserType = {
+type UserType = {
     id: number,
     name: string
 }
 
-export type MessagesType = {
+type MessagesType = {
     id: number
     message: string
 }
 
-export type PostType = {
+type PostType = {
     id: number
     post: string | undefined
 }
 
-export type dialogsPageType = {
+type DialogsPageType = {
     users: UserType[]
     messages: MessagesType[]
     newMessageText: string
 }
 
-export type postsType = {
+type ProfilePageType = {
     posts: PostType[]
     newPostMessage: string
 }
 
-export type StateType = {
-    dialogsPage: dialogsPageType
-    profilePage: postsType
+type StateType = {
+    dialogsPage: DialogsPageType
+    profilePage: ProfilePageType
 }
 
-export type ActionType = AddPostType | UpdateNewPostType | UpdateNewMessageType | SendNewMessageType
+type ActionType = AddPostType | UpdateNewPostType | UpdateNewMessageType | SendNewMessageType
 
-export type StoreType = {
+type StoreType = {
     _state: StateType
     _callSubscriber: () => void
     getState: () => StateType

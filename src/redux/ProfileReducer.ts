@@ -1,4 +1,5 @@
-import {ActionType, postsType, PostType} from "./store";
+import {ActionType, PostType, ProfilePageType} from "./redux-store";
+
 
 export type AddPostType = {
     type: typeof ADD_POST
@@ -18,19 +19,16 @@ const initialState = {
     newPostMessage: ''
 }
 
-export const ProfileReducer = (state: postsType = initialState, action: ActionType): postsType => {
+export const ProfileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
     switch (action?.type) {
         case "ADD-POST":
             const newPost: PostType = {
                 id: state.posts.length + 1,
                 post: state.newPostMessage
             }
-            state.posts.push(newPost);
-            state.newPostMessage = '';
-            return state;
+            return  {...state, posts: [...state.posts, newPost], newPostMessage: ''}
         case "UPDATE-NEW-POST-TEXT":
-            state.newPostMessage = action.newText;
-            return state;
+            return  {...state, newPostMessage: action.newText}
         default:
             return state
     }

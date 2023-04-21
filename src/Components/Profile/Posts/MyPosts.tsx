@@ -1,16 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import {Button} from "../../../Button/Button";
-import {PostType} from "../../../redux/store";
 import {Posts} from "./Posts";
+import {ProfileType} from "./MyPostsContainer";
 
-type MyPostsType = {
-    addPost: () => void
-    updateNewPostText: (text: string) => void
-    posts: PostType[]
-    newPostMessage: string
-}
-
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts = (props: ProfileType) => {
 
     const addPostHandler = () => {
         props.addPost()
@@ -24,9 +17,9 @@ export const MyPosts = (props: MyPostsType) => {
     return (
         <div>
             <div>My posts</div>
-            <textarea value={props.newPostMessage} onChange={onChangeHandler}/>
+            <textarea value={props.profilePage.newPostMessage} onChange={onChangeHandler}/>
             <Button title='Add post' callback={addPostHandler}/>
-            <Posts posts={props.posts}/>
+            <Posts posts={props.profilePage.posts}/>
         </div>
     )
 }
