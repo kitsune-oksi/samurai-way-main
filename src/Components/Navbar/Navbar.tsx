@@ -8,6 +8,7 @@ export function Navbar () {
             <ul style={{listStyle: "none", padding: 0}}>
                 <li><NavLink to='/Profile' activeClassName={n.active}>Profile</NavLink></li>
                 <li><NavLink to='/Dialogs' activeClassName={n.active}>Dialogs</NavLink></li>
+                <li><NavLink to='/Users' activeClassName={n.active}>Users</NavLink></li>
                 <li><NavLink to='/News' activeClassName={n.active}>News</NavLink></li>
                 <li><NavLink to='/Music' activeClassName={n.active}>Music</NavLink></li>
                 <li><NavLink to='/Settings' activeClassName={n.active}>Settings</NavLink></li>
