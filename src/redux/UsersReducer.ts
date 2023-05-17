@@ -3,17 +3,27 @@ export type UsersPageType = {
 }
 
 export type UserType = {
+    // id: number
+    // fullName: string
+    // followed: boolean
+    // status: string
+    // location: LocationType
+
+    name: string
     id: number
-    fullName: string
+    uniqueUrlName: null
+    photos: {
+        small: null,
+        large: null
+    },
+    status: null,
     followed: boolean
-    status: string
-    location: LocationType
 }
 
-type LocationType = {
-    city: string
-    country: string
-}
+// type LocationType = {
+//     city: string
+//     country: string
+// }
 
 //type FollowACType = ReturnType<typeof followAC>
 
@@ -38,7 +48,7 @@ type UnfollowACType = {
 type SetUsersACType = {
     type: typeof SET_USERS
     payload: {
-        users: UserType
+        users: UserType[]
     }
 }
 
@@ -50,27 +60,27 @@ const SET_USERS = 'SET_USERS'
 
 const initialState = {
     users: [
-        {
-            id: 1,
-            fullName: 'Ingvarr',
-            followed: true,
-            status: 'I am the best',
-            location: {city: 'New-York', country: 'USA'}
-        },
-        {
-            id: 2,
-            fullName: 'Oxi',
-            followed: false,
-            status: 'I am the best too',
-            location: {city: 'New-York', country: 'USA'}
-        },
-        {
-            id: 3,
-            fullName: 'Marci',
-            followed: true,
-            status: 'I am the best of the best',
-            location: {city: 'Novocherkassk', country: 'Russia'}
-        }
+        // {
+        //     id: 1,
+        //     fullName: 'Ingvarr',
+        //     followed: true,
+        //     status: 'I am the best',
+        //     location: {city: 'New-York', country: 'USA'}
+        // },
+        // {
+        //     id: 2,
+        //     fullName: 'Oxi',
+        //     followed: false,
+        //     status: 'I am the best too',
+        //     location: {city: 'New-York', country: 'USA'}
+        // },
+        // {
+        //     id: 3,
+        //     fullName: 'Marci',
+        //     followed: true,
+        //     status: 'I am the best of the best',
+        //     location: {city: 'Novocherkassk', country: 'Russia'}
+        // }
     ]
 }
 
@@ -81,7 +91,7 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
         case UNFOLLOW:
             return {...state, users: state.users.map(u => u.id === action.payload.userID ? {...u, followed: false} : u)}
         case SET_USERS:
-            return {...state, users: [...state.users, action.payload.users]}
+            return {...state, users: [...state.users, ...action.payload.users]}
         default:
             return state;
     }
@@ -99,7 +109,7 @@ export const unfollowAC = (userID: number): UnfollowACType => ({
         userID
     } as const
 })
-export const setUsersAC = (users: UserType): SetUsersACType => ({
+export const setUsersAC = (users: UserType[]): SetUsersACType => ({
     type: SET_USERS,
     payload: {
         users

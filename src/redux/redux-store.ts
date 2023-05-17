@@ -50,4 +50,6 @@ const rootReducer = combineReducers({
 // DialogsReducer
 
 export let store = createStore(rootReducer);
+//@ts-ignore
+window.store = store
 
