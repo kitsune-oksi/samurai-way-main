@@ -23,7 +23,7 @@ type MapDispatchToPropsType = {
 
 export type UsersType = UsersPageType & MapDispatchToPropsType
 
-class UsersContainer extends React.Component<any, any> {
+class UsersContainer extends React.Component<UsersType> {
 
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
@@ -35,7 +35,6 @@ class UsersContainer extends React.Component<any, any> {
     }
 
     onPageChanged(pageNumber: number) {
-        debugger
         this.props.setPage(pageNumber);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
@@ -49,7 +48,7 @@ class UsersContainer extends React.Component<any, any> {
                       totalUsersCount={this.props.totalUsersCount}
                       pageSize = {this.props.pageSize}
                       currentPage = {this.props.currentPage}
-                      onPageChanged = {this.onPageChanged}
+                      onPageChanged = {this.onPageChanged.bind(this)}
                       unfollow = {this.props.unfollow}
                       follow = {this.props.follow}
         />

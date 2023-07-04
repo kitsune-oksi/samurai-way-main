@@ -20,8 +20,8 @@ export const Users: React.FC<UsersPropsType> = ({totalUsersCount, pageSize, curr
         pages.push(i)
     }
     return <div>
-        {pages.map((p) => {
-            return <span className={p === currentPage ? styles.selectedPage : ''}
+        {pages.map((p, index) => {
+            return <span key={index} className={p === currentPage ? styles.selectedPage : ''}
                          onClick={()=>{onPageChanged(p)}}>{p}</span>
         })}
         {users.map((u) => <div key={u.id}>
