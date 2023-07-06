@@ -1,4 +1,4 @@
-import {PostType} from "../../../redux/redux-store";
+import {PostType} from "../../../redux/ProfileReducer";
 
 type PostsPropsType = {
     posts: PostType[]
