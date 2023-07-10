@@ -5,7 +5,6 @@ type PostsPropsType = {
 }
 
 export const Posts = (props: PostsPropsType) => {
-    debugger
     return (
         <div>
             {props.posts.map(el => {

@@ -27,8 +27,8 @@ export const Users: React.FC<UsersPropsType> = ({totalUsersCount, pageSize, curr
         })}
         {users.map((u) => <div key={u.id}>
                 <div>
-                    <NavLink to={'/profile' + u.id}>
-                    <img src={u.photos.small != null ? u.photos.small : userPhoto} alt='avatar'
+                    <NavLink to={'/profile/' + u.id}>
+                    <img src={u.photos.small !== null ? u.photos.small : userPhoto} alt='avatar'
                          className={styles.userPhoto}/>
                     </NavLink>
                 </div>

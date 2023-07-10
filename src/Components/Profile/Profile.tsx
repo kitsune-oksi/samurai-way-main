@@ -5,7 +5,6 @@ import {MyPostsContainer} from "./Posts/MyPostsContainer";
 import {ProfileContainerStateType} from "./ProfileContainer";
 
 export function Profile (props: ProfileContainerStateType) {
-    debugger
     return (
         <div className={p.content}>
             <ProfileInfo profile={props.profile}/>

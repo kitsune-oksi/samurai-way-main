@@ -1,4 +1,3 @@
-
 export type PostType = {
     id: number
     post: string | undefined
@@ -7,7 +6,22 @@ export type PostType = {
 export type ProfilePageType = {
     posts: PostType[]
     newPostMessage: string
-    profile: any
+    profile: ProfileType | null
+}
+
+export type ProfileType = {
+    aboutMe: string | null
+    contacts:
+        { [key: string]: string | null }
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    photos:
+        {
+            small: string | null
+            large: string | null
+        }
+    userId: number
 }
 
 export type AddPostType = {
@@ -43,9 +57,9 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Ac
                 id: state.posts.length + 1,
                 post: state.newPostMessage
             }
-            return  {...state, posts: [...state.posts, newPost], newPostMessage: ''}
+            return {...state, posts: [...state.posts, newPost], newPostMessage: ''}
         case "UPDATE-NEW-POST-TEXT":
-            return  {...state, newPostMessage: action.newText}
+            return {...state, newPostMessage: action.newText}
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         default:

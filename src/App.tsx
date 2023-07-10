@@ -18,7 +18,7 @@ function App() {
                 <Header/>
                 <Navbar/>
                 <div className='app-content'>
-                    <Route path='/Profile*' render={()=> <ProfileContainer/>}/>
+                    <Route path='/Profile/:userID?' render={()=> <ProfileContainer/>}/>
                     <Route path='/Dialogs' render={()=> <DialogsContainer/>}/>
                     <Route path='/Users' render={()=> <UsersContainer/>}/>
                     <Route path='/News' render={()=> <News/>}/>
