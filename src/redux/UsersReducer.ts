@@ -136,37 +136,37 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
     }
 }
 
-export const followAC = (userID: number): FollowACType  => ({
+export const follow = (userID: number): FollowACType  => ({
     type: FOLLOW,
     payload: {
         userID
     } as const
 })
-export const unfollowAC = (userID: number): UnfollowACType => ({
+export const unfollow = (userID: number): UnfollowACType => ({
     type: UNFOLLOW,
     payload: {
         userID
     } as const
 })
-export const setUsersAC = (users: UserType[]): SetUsersACType => ({
+export const setUsers = (users: UserType[]): SetUsersACType => ({
     type: SET_USERS,
     payload: {
         users
     } as const
 })
-export const setPageAC = (currentPage: number): SetPageACType => ({
+export const setPage = (currentPage: number): SetPageACType => ({
     type: SET_PAGE,
     payload: {
         currentPage
     } as const
 })
-export const setTotalUsersCountAC = (totalUsersCount: number): setTotalUsersCountACType => ({
+export const setTotalUsersCount = (totalUsersCount: number): setTotalUsersCountACType => ({
     type: SET_TOTAL_USERS_COUNT,
     payload: {
         totalUsersCount
     } as const
 })
-export const setIsFetchingAC = (isFetching: boolean): setIsFetchingACType => ({
+export const setPreloader = (isFetching: boolean): setIsFetchingACType => ({
     type: SET_IS_FETCHING,
     payload: {
         isFetching

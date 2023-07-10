@@ -1,5 +1,5 @@
 import {combineReducers, createStore} from "redux";
-import {AddPostType, ProfileReducer, UpdateNewPostType} from "./ProfileReducer";
+import {ProfileReducer} from "./ProfileReducer";
 import {DialogsReducer, SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 import {UsersReducer} from "./UsersReducer";
 
@@ -12,17 +12,7 @@ import {UsersReducer} from "./UsersReducer";
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
-export type ActionType = AddPostType | UpdateNewPostType | UpdateNewMessageType | SendNewMessageType
-
-export type PostType = {
-    id: number
-    post: string | undefined
-}
-
-export type ProfilePageType = {
-    posts: PostType[]
-    newPostMessage: string
-}
+export type ActionType = UpdateNewMessageType | SendNewMessageType
 
 type UserType = {
     id: number,

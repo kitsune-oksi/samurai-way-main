@@ -1,8 +1,8 @@
 import React from 'react';
-import {addPostActionCreator, updateNewPostActionCreator} from '../../../redux/ProfileReducer';
+import {addPostActionCreator, ProfilePageType, updateNewPostActionCreator} from '../../../redux/ProfileReducer';
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {AppDispatch, ProfilePageType, RootState} from "../../../redux/redux-store";
+import {AppDispatch, RootState} from "../../../redux/redux-store";
 
 // export const MyPostsContainer = () => {
 //

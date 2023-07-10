@@ -1,11 +1,10 @@
-import {PostType} from "../../../redux/redux-store";
+import {PostType} from "../../../redux/ProfileReducer";
 
 type PostsPropsType = {
     posts: PostType[]
 }
 
 export const Posts = (props: PostsPropsType) => {
-    debugger
     return (
         <div>
             {props.posts.map(el => {
