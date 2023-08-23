@@ -2,6 +2,7 @@ import {combineReducers, createStore} from "redux";
 import {ProfileReducer} from "./ProfileReducer";
 import {DialogsReducer, SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 import {UsersReducer} from "./UsersReducer";
+import {AuthReducer} from "./AuthReducer";
 
 // type ReducersType = typeof rootReducer;
 // export type ReduxStoreType = ReturnType<ReducersType>;
@@ -33,7 +34,8 @@ export type DialogsPageType = {
 const rootReducer = combineReducers({
     dialogsPage: DialogsReducer,
     profilePage: ProfileReducer,
-    usersPage: UsersReducer
+    usersPage: UsersReducer,
+    auth: AuthReducer
 });
 // combineReducers создает объект с ключом-значением, воспринимать как state. Запись выше аналогична:
 // ProfileReducer,

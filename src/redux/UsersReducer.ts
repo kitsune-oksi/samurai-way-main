@@ -4,6 +4,8 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    isFollowing: boolean
+    followingProgress: Array<null | number>
 }
 
 export type UserType = {
@@ -77,8 +79,23 @@ type setIsFetchingACType = {
     }
 }
 
+type setFollowingProgressACType = {
+    type: typeof SET_FOLLOWING_PROGRESS
+    payload: {
+        id: number
+        isFollowing: boolean
+    }
+}
 
-type ActionType = FollowACType | UnfollowACType | SetUsersACType | SetPageACType | setTotalUsersCountACType | setIsFetchingACType;
+
+type ActionType =
+    FollowACType
+    | UnfollowACType
+    | SetUsersACType
+    | SetPageACType
+    | setTotalUsersCountACType
+    | setIsFetchingACType
+    | setFollowingProgressACType;
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -86,6 +103,7 @@ const SET_USERS = 'SET_USERS';
 const SET_PAGE = 'SET_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
+const SET_FOLLOWING_PROGRESS = 'SET_FOLLOWING_PROGRESS';
 
 const initialState: UsersPageType = {
     users: [
@@ -114,7 +132,9 @@ const initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 19,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    isFollowing: false,
+    followingProgress: []
 }
 
 export const UsersReducer = (state: UsersPageType = initialState, action: ActionType): UsersPageType => {
@@ -131,12 +151,18 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
             return {...state, totalUsersCount: action.payload.totalUsersCount}
         case SET_IS_FETCHING:
             return {...state, isFetching: action.payload.isFetching}
+        case SET_FOLLOWING_PROGRESS:
+            return {...state,
+                followingProgress: action.payload.isFollowing ?
+                    [...state.followingProgress, action.payload.id]
+                    : state.followingProgress.filter((id) => id !== action.payload.id)
+            }
         default:
             return state;
     }
 }
 
-export const follow = (userID: number): FollowACType  => ({
+export const follow = (userID: number): FollowACType => ({
     type: FOLLOW,
     payload: {
         userID
@@ -170,6 +196,13 @@ export const setPreloader = (isFetching: boolean): setIsFetchingACType => ({
     type: SET_IS_FETCHING,
     payload: {
         isFetching
+    } as const
+})
+export const setFollowingProgress = (id: number, isFollowing: boolean): setFollowingProgressACType => ({
+    type: SET_FOLLOWING_PROGRESS,
+    payload: {
+        isFollowing,
+        id
     } as const
 })
 
