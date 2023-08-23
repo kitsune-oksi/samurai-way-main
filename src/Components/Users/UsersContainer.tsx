@@ -7,12 +7,12 @@ import {
     setUsers,
     unfollow,
     UsersPageType,
-    UserType
+    UserType, setFollowingProgress
 } from "../../redux/UsersReducer";
 import React from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {UsersAPI} from "../../API/UsersAPI";
 
 type MapDispatchToPropsType = {
     follow: (userID: number) => void
@@ -21,6 +21,7 @@ type MapDispatchToPropsType = {
     setPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     setPreloader: (isFetching: boolean) => void
+    setFollowingProgress: (id: number, isFollowing: boolean) => void
 }
 
 export type UsersType = UsersPageType & MapDispatchToPropsType
@@ -29,10 +30,10 @@ class UsersContainer extends React.Component<UsersType> {
 
     componentDidMount() {
         this.props.setPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
-                    this.props.setUsers(response.data.items);
-                    this.props.setTotalUsersCount(response.data.totalCount)
+        UsersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                    this.props.setUsers(data.items);
+                    this.props.setTotalUsersCount(data.totalCount)
                     this.props.setPreloader(false)
                 }
             );
@@ -41,9 +42,9 @@ class UsersContainer extends React.Component<UsersType> {
     onPageChanged(pageNumber: number) {
         this.props.setPreloader(true)
         this.props.setPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
-                    this.props.setUsers(response.data.items);
+        UsersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                    this.props.setUsers(data.items);
                     this.props.setPreloader(false)
                 }
             );
@@ -59,6 +60,8 @@ class UsersContainer extends React.Component<UsersType> {
                    onPageChanged={this.onPageChanged.bind(this)}
                    unfollow={this.props.unfollow}
                    follow={this.props.follow}
+                   followingProgress={this.props.followingProgress}
+                   setFollowingProgress={this.props.setFollowingProgress}
             />
         </>
     }
@@ -70,7 +73,9 @@ const mapStateToProps = (state: RootState): UsersPageType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        isFollowing: state.usersPage.isFollowing,
+        followingProgress: state.usersPage.followingProgress
     }
 }
 
@@ -98,5 +103,5 @@ const mapStateToProps = (state: RootState): UsersPageType => {
 // }
 
 export default connect(mapStateToProps, {
-    follow, unfollow, setUsers, setPage, setTotalUsersCount, setPreloader
+    follow, unfollow, setUsers, setPage, setTotalUsersCount, setPreloader, setFollowingProgress
 })(UsersContainer)
