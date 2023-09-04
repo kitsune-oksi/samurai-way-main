@@ -3,7 +3,6 @@ import React from "react";
 import {UserType} from "../../redux/UsersReducer";
 import styles from './User.module.css'
 import {NavLink} from "react-router-dom";
-import {UsersAPI} from "../../API/UsersAPI";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -14,7 +13,6 @@ type UsersPropsType = {
     unfollow: (userID: number) => void
     follow: (userID: number) => void
     followingProgress: Array<null | number>
-    setFollowingProgress: (id: number, isFollowing: boolean) => void
 }
 
 export const Users: React.FC<UsersPropsType> = ({
@@ -26,7 +24,6 @@ export const Users: React.FC<UsersPropsType> = ({
                                                     unfollow,
                                                     follow,
                                                     followingProgress,
-                                                    setFollowingProgress
                                                 }) => {
     let pageCount = Math.ceil(totalUsersCount / pageSize);
     let pages = [];
@@ -52,25 +49,11 @@ export const Users: React.FC<UsersPropsType> = ({
                 </div>
                 <div>
                     {u.followed ? <button disabled={followingProgress.some((id) => id === u.id)} onClick={() => {
-                            setFollowingProgress(u.id, true)
-                            UsersAPI.unfollowUser(u.id)
-                                .then((data) => {
-                                    if (data.resultCode === 0) {
-                                        unfollow(u.id)
-                                    }
-                                    setFollowingProgress(u.id, false)
-                                })
+                            follow(u.id)
                         }}
                         >Unfollow</button> :
                         <button disabled={followingProgress.some(id => id === u.id)} onClick={() => {
-                            setFollowingProgress(u.id, true)
-                            UsersAPI.followUser(u.id)
-                                .then((data) => {
-                                    if (data.resultCode === 0) {
-                                        follow(u.id)
-                                    }
-                                    setFollowingProgress(u.id, false)
-                                })
+                            unfollow(u.id)
                         }
                         }>Follow</button>}
                 </div>
