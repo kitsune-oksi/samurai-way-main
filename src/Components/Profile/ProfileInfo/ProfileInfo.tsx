@@ -1,8 +1,8 @@
 import p from "./ProfileInfo.module.css";
 import React from "react";
-import {ProfileContainerStateType} from "../ProfileContainer";
+import {ProfilePropsType} from "../Profile";
 
-export const ProfileInfo = (props: ProfileContainerStateType) => {
+export const ProfileInfo = (props: ProfilePropsType) => {
 
     return (
         <>
