@@ -1,9 +1,9 @@
 import p from "./ProfileInfo.module.css";
 import React from "react";
 import {ProfilePropsType} from "../Profile";
+import ProfileStatus from "../Status/Status";
 
 export const ProfileInfo = (props: ProfilePropsType) => {
-
     return (
         <>
             <div>
@@ -12,7 +12,7 @@ export const ProfileInfo = (props: ProfilePropsType) => {
             </div>
             <div>
                 {props.profile?.photos.large && <img src={props.profile?.photos.large} alt={'avatar'}/>}
-                ava+description
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </>
     )

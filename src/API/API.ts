@@ -14,10 +14,6 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(res => res.data)
     },
-    getProfile (userID: string) {
-        return instance.get(`profile/${userID}`)
-            .then( res => res.data)
-    },
     unfollowUser (userID: number) {
         return instance.delete(`follow/${userID}`)
             .then(res => res.data)
@@ -32,5 +28,19 @@ export const authAPI = {
     me () {
         return instance.get(`auth/me`)
             .then(res => res.data)
+    }
+}
+
+export const profileAPI = {
+    getProfile (userID: string) {
+        return instance.get(`profile/${userID}`)
+            .then( res => res.data)
+    },
+    getStatus (userID: string) {
+        return instance.get(`profile/status/${userID}`)
+            .then((res)=> res.data)
+    },
+    setStatus (status: string) {
+        return instance.put(`profile/status`, {status})
     }
 }
