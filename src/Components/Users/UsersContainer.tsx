@@ -6,9 +6,10 @@ import {
     getUsers,
     unfollow
 } from "../../redux/UsersReducer";
-import React from "react";
+import React, {ComponentType} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import { compose } from "redux";
 
 type MapDispatchToPropsType = {
     follow: (id: number) => void
@@ -79,4 +80,8 @@ const mapStateToProps = (state: RootState): UsersPageType => {
 //     }
 // }
 
-export default connect(mapStateToProps, {follow, unfollow, getUsers})(UsersContainer)
+// export default connect(mapStateToProps, {follow, unfollow, getUsers})(UsersContainer)
+
+export default compose<ComponentType>(
+    connect(mapStateToProps, {follow, unfollow, getUsers})
+)(UsersContainer)
