@@ -28,6 +28,14 @@ export const authAPI = {
     me () {
         return instance.get(`auth/me`)
             .then(res => res.data)
+    },
+    logIn (email: string, password: string, rememberMe?: boolean, captcha?: boolean) {
+        return instance.post<ResponseType<{userId: number}>> ('auth/login', {email, password, rememberMe, captcha})
+            .then(res => res.data)
+    },
+    logOut () {
+        return instance.delete<ResponseType>('auth/login')
+            .then(res => res.data)
     }
 }
 
@@ -42,5 +50,12 @@ export const profileAPI = {
     },
     setStatus (status: string) {
         return instance.put(`profile/status`, {status})
+            .then(res => res.data)
     }
+}
+
+type ResponseType<T = {}> = {
+    resultCode: number
+    messages: []
+    data: T
 }
