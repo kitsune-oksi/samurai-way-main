@@ -1,7 +1,7 @@
 import React from 'react';
 import h from './Header.module.css';
 import {NavLink} from "react-router-dom";
-import {HeaderContainerStateType} from './HeaderContainer';
+import { HeaderContainerStateType } from './HeaderContainer';
 
 type PropsType = HeaderContainerStateType & {logOut: () => void}
 

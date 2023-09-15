@@ -6,6 +6,7 @@ import {AuthReducer} from "./AuthReducer";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { reducer as formReducer} from "redux-form";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import {AppReducer} from "./AppReducer";
 
 
 // type ReducersType = typeof rootReducer;
@@ -42,7 +43,8 @@ const rootReducer = combineReducers({
     profilePage: ProfileReducer,
     usersPage: UsersReducer,
     auth: AuthReducer,
-    form: formReducer
+    form: formReducer,
+    app: AppReducer
 });
 // combineReducers создает объект с ключом-значением, воспринимать как state. Запись выше аналогична:
 // ProfileReducer,
