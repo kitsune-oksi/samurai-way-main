@@ -1,12 +1,12 @@
-import { authAPI } from "../API/API";
+import {authAPI} from "../API/API";
 import {AppDispatch} from "./redux-store";
-import {stopSubmit} from "redux-form";
 
 type UserDataType = {
     id: string | null
     email: string | null
     login: string | null
     isAuth: boolean
+    errors?: null | string
 }
 
 type SetUserData = {
@@ -15,24 +15,37 @@ type SetUserData = {
         data: UserDataType
     }
 }
+type SetError = {
+    type: 'SET_ERROR'
+    payload: {
+        error: string
+    }
+}
 
-type ActionType = SetUserData;
+type ActionType = SetUserData | SetError;
 
 const SET_USER_DATA = 'SET_USER_DATA'
+const SET_ERROR = 'SET_ERROR'
 
 const initialState: UserDataType = {
     id: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    errors: null
 }
 
-export const  AuthReducer = (state: UserDataType = initialState, action: ActionType): UserDataType => {
+export const AuthReducer = (state: UserDataType = initialState, action: ActionType): UserDataType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,
-                ... action.payload.data
+                ...action.payload.data
+            }
+        case SET_ERROR:
+            return {
+                ...state,
+                errors: action.payload.error
             }
         default:
             return state
@@ -50,6 +63,12 @@ const setAuthUserData = (id: string | null, email: string | null, login: string 
         }
     }
 })
+const setError = (error: string): SetError => ({
+    type: SET_ERROR,
+    payload: {
+        error
+    }
+})
 
 //TC
 export const getAuthUserData = () => (dispatch: AppDispatch) => {
@@ -61,14 +80,16 @@ export const getAuthUserData = () => (dispatch: AppDispatch) => {
             }
         })
 }
+
 export const logIn = (email: string, password: string, rememberMe?: boolean, captcha?: boolean) => (dispatch: AppDispatch) => {
-    authAPI.logIn(email, password, rememberMe, captcha)
+    return authAPI.logIn(email, password, rememberMe, captcha)
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
                 let message = res.messages.length > 0 ? res.messages[0] : 'Some error';
-                dispatch(stopSubmit('login', {_error: message}))
+                // dispatch(stopSubmit('login', {_error: message}))
+                dispatch(setError(message))
             }
         })
 }
