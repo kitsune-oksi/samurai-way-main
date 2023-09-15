@@ -1,23 +1,36 @@
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import React from "react";
+import {maxLengthCreator, requiredField} from "../../utils/validators/valodators";
+import {Input} from "../common/FormsControl/FormsContol";
+import {connect} from "react-redux";
+import {logIn} from "../../redux/AuthReducer";
+import {RootState} from "../../redux/redux-store";
+import {Redirect} from "react-router-dom";
+import styles from "../common/FormsControl/FormsControl.module.css"
+
 
 type FormDataType = {
-    login: string
+    email: string
     password: string
     rememberMe: boolean
 }
+
+const maxLength30 = maxLengthCreator(30);
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder='Login' component='input' name='login'/>
+                <Field placeholder='Email' component={Input} name='email' validate={[requiredField]}/>
             </div>
             <div>
-                <Field placeholder='Password' component='input' name='password'/>
+                <Field placeholder='Password' component={Input} name='password' validate={[requiredField, maxLength30]}/>
             </div>
             <div>
-                <Field type='checkbox' component='input' name='rememberMe'/> remember me
+                <Field type='checkbox' component={Input} name='rememberMe'/> remember me
+            </div>
+            <div>
+                {props.error && <div className={styles.formSummaryError}>{props.error}</div>}
             </div>
             <div>
                 <button>Login</button>
@@ -28,9 +41,13 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-export const Login = () => {
+const Login = (props: any) => {
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        props.logIn(formData.email, formData.password, formData.rememberMe)
+    }
+
+    if (props.isAuth) {
+        return <Redirect to={'/Profile'}/>
     }
 
     return <div>
@@ -39,3 +56,9 @@ export const Login = () => {
     </div>
 
 }
+
+const mapStateToProps = (state: RootState) => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {logIn})(Login)

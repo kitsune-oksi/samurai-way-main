@@ -10,6 +10,8 @@ import {compose} from "redux";
 export type ProfileContainerStateType = {
     profile: ProfileType | null
     status: string
+    autorizedUserID: string | null
+    isAuth: boolean
 }
 
 type ProfileContainerDispatchType = {
@@ -31,7 +33,12 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userID = this.props.match.params.userID;
         if (!userID) {
-            userID = '19523'
+            if (this.props.autorizedUserID) {
+                userID =  this.props.autorizedUserID
+            } else {
+                this.props.history.push('/Login')
+            }
+
         }
         this.props.getUserProfile(userID)
         this.props.getStatus(userID)
@@ -44,7 +51,9 @@ class ProfileContainer extends React.Component<PropsType> {
 
 const mapStateToProps = (state: RootState): ProfileContainerStateType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    autorizedUserID: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
 // const profileContainerWithURL = withRouter(ProfileContainer);

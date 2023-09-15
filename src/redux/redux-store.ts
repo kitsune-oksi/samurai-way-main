@@ -1,11 +1,12 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
 import {ProfileReducer} from "./ProfileReducer";
 import {DialogsReducer, SendNewMessageType, UpdateNewMessageType} from "./DialogsReducer";
 import {UsersReducer} from "./UsersReducer";
 import {AuthReducer} from "./AuthReducer";
-import thunk from "redux-thunk";
+import thunk, { ThunkDispatch } from "redux-thunk";
 import { reducer as formReducer} from "redux-form";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import {AppReducer} from "./AppReducer";
 
 
 // type ReducersType = typeof rootReducer;
@@ -15,7 +16,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // аналогично
 
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+// export type AppDispatch = typeof store.dispatch
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>;
+
 
 export type ActionType = UpdateNewMessageType | SendNewMessageType
 
@@ -40,7 +43,8 @@ const rootReducer = combineReducers({
     profilePage: ProfileReducer,
     usersPage: UsersReducer,
     auth: AuthReducer,
-    form: formReducer
+    form: formReducer,
+    app: AppReducer
 });
 // combineReducers создает объект с ключом-значением, воспринимать как state. Запись выше аналогична:
 // ProfileReducer,
