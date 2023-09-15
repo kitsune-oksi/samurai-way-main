@@ -9,11 +9,11 @@ import UsersContainer from './Components/Users/UsersContainer';
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from './Components/Header/HeaderContainer';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
-import Login from './Components/Login/Login';
 import {connect} from "react-redux";
 import {RootState} from "./redux/redux-store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/AppReducer";
+import Login from "./Components/Login/LoginWithReactHookForm";
 
 type PropsType = mapDispatchToPropsType & mapStateToPropsType
 type mapDispatchToPropsType = {
@@ -23,7 +23,7 @@ type mapStateToPropsType = {
     isInitialized: boolean
 }
 
-class App extends React.Component<PropsType> {
+class App extends React.Component<PropsType, RootState> {
 
     componentDidMount() {
         this.props.initializeApp()

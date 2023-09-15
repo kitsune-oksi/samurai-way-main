@@ -41,7 +41,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-const Login = (props: any) => {
+const LoginWithReactForm = (props: any) => {
     const onSubmit = (formData: FormDataType) => {
         props.logIn(formData.email, formData.password, formData.rememberMe)
     }
@@ -61,4 +61,4 @@ const mapStateToProps = (state: RootState) => ({
     isAuth: state.auth.isAuth
 })
 
-export default connect(mapStateToProps, {logIn})(Login)
+export default connect(mapStateToProps, {logIn})(LoginWithReactForm);
