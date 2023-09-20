@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     withCredentials: true,
@@ -49,7 +49,7 @@ export const profileAPI = {
             .then((res)=> res.data)
     },
     setStatus (status: string) {
-        return instance.put(`profile/status`, {status})
+        return instance.put<AxiosResponse<ResponseType>>(`profile/status`, {status})
             .then(res => res.data)
     }
 }

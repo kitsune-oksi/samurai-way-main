@@ -7,21 +7,20 @@ import {SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-
-type FormData = yup.InferType<typeof schema>;
-
 const schema = yup.object({
     email: yup.string().required().email(),
-    password: yup.string().required()
+    password: yup.string().required(),
+    rememberMe: yup.boolean().default(false)
 })
+type FormData = yup.InferType<typeof schema>;
 
 const Login = (props: MapDispatchToPropsType & MapStateToPropsType) => {
 
-    const {register, handleSubmit, formState: { errors }} = useForm<FormData & {rememberMe: boolean}>({
+    const {register, handleSubmit, formState: { errors }} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
 
-    const onSubmit: SubmitHandler<FormData & {rememberMe: boolean}> = ({email, password, rememberMe}) => {
+    const onSubmit: SubmitHandler<FormData > = ({email, password, rememberMe}) => {
         props.logIn(email, password, rememberMe)
     }
 
@@ -33,12 +32,12 @@ const Login = (props: MapDispatchToPropsType & MapStateToPropsType) => {
         <h1>LOGIN</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <input placeholder='Email' {...register("email", { required: true })}/>
+                <input placeholder='Email' {...register('email')} />
                 {/*{errors.email && <span >This field is required</span>}*/}
                 <p>{errors.email?.message}</p>
             </div>
             <div>
-                <input placeholder='Password' {...register("password", { required: true })}/>
+                <input placeholder='Password' {...register("password")}/>
                 <p>{errors.password?.message}</p>
             </div>
             <div>
