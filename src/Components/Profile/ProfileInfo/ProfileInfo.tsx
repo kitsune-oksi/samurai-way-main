@@ -1,7 +1,7 @@
 import p from "./ProfileInfo.module.css";
 import React from "react";
 import {ProfilePropsType} from "../Profile";
-import ProfileStatus from "../Status/Status";
+import {ProfileStatus} from "../Status/Status";
 
 export const ProfileInfo = (props: ProfilePropsType) => {
     return (

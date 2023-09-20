@@ -69,7 +69,7 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Ac
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_USER_STATUS:
-            return {...state, status: action.status ? action.status : ''}
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -108,7 +108,8 @@ export const getStatus = (userID: string) => (dispatch: Dispatch<ActionType>) =>
 export const updateStatus = (status: string) => (dispatch: Dispatch<ActionType>) => {
     profileAPI.setStatus(status)
         .then((res) => {
-            if (res.data.resultCode === 0)
+            console.log(res)
+            if (res.resultCode === 0)
                 dispatch(setStatus(status));
             }
         );
