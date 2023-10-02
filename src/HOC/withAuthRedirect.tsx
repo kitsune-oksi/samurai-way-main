@@ -1,4 +1,4 @@
-import {RootState} from "../redux/redux-store";
+import {RootState} from "../state/store";
 import React, {ComponentType} from "react";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";

@@ -10,25 +10,15 @@ import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from './Components/Header/HeaderContainer';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
 import {connect} from "react-redux";
-import {RootState} from "./redux/redux-store";
+import {RootState} from "./state/store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
-import {initializeApp} from "./redux/AppReducer";
+import {initializeApp} from "./state/AppReducer";
 import Login from "./Components/Login/LoginWithReactHookForm";
 
-type PropsType = mapDispatchToPropsType & mapStateToPropsType
-type mapDispatchToPropsType = {
-    initializeApp: () => void
-}
-type mapStateToPropsType = {
-    isInitialized: boolean
-}
-
 class App extends React.Component<PropsType, RootState> {
-
     componentDidMount() {
         this.props.initializeApp()
     }
-
     render() {
         if (!this.props.isInitialized) {
             return <Preloader/>
@@ -58,3 +48,12 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 export default connect(mapStateToProps, {initializeApp})(App)
+
+//types
+type PropsType = mapDispatchToPropsType & mapStateToPropsType
+type mapDispatchToPropsType = {
+    initializeApp: () => void
+}
+type mapStateToPropsType = {
+    isInitialized: boolean
+}

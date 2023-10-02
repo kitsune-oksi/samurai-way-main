@@ -1,16 +1,6 @@
-import {ActionType, DialogsPageType, MessagesType} from "./redux-store";
 
-export type SendNewMessageType = {
-    type: typeof SEND_NEW_MESSAGE
-}
-
-export type UpdateNewMessageType = {
-    type: typeof UPDATE_NEW_MESSAGE_TEXT
-    newText: string
-}
-
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-const SEND_NEW_MESSAGE = 'SEND-NEW-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'dialogsPage/UPDATE-NEW-MESSAGE-TEXT';
+const SEND_NEW_MESSAGE = 'dialogsPage/SEND-NEW-MESSAGE';
 
 const initialState: DialogsPageType = {
     users: [
@@ -18,7 +8,6 @@ const initialState: DialogsPageType = {
         {id: 2, name: 'Марселин'},
         {id: 3, name: 'Чуча'}
     ],
-
     messages: [
         {id: 1, message: 'Hey'},
         {id: 2, message: 'Wazzap'},
@@ -29,24 +18,43 @@ const initialState: DialogsPageType = {
 }
 
 export const DialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
-    switch (action?.type) {
-        case "SEND-NEW-MESSAGE":
+    switch (action.type) {
+        case SEND_NEW_MESSAGE:
             const newMessage: MessagesType = {
                 id: state.messages.length + 1,
                 message: state.newMessageText
             };
             return  {...state, messages: [...state.messages, newMessage], newMessageText: ''}
-        case "UPDATE-NEW-MESSAGE-TEXT":
-            return {...state, newMessageText: action.newText}
+        case UPDATE_NEW_MESSAGE_TEXT:
+            return {...state, newMessageText: action.payload.newText}
         default:
             return state;
     }
 }
 
-export const sendNewMessageActionCreator = (): SendNewMessageType => ({
+//AC
+export const sendNewMessage = () => ({
     type: SEND_NEW_MESSAGE
-})
-export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageType => ({
+} as const)
+export const updateNewMessageText = (newText: string) => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
-    newText: text
-})
+    payload: {
+        newText
+    }
+} as const)
+
+//types
+type ActionType = ReturnType<typeof updateNewMessageText> | ReturnType<typeof sendNewMessage>
+export type DialogsPageType = {
+    users: UserType[]
+    messages: MessagesType[]
+    newMessageText: string
+}
+type UserType = {
+    id: number,
+    name: string
+}
+type MessagesType = {
+    id: number
+    message: string
+}
