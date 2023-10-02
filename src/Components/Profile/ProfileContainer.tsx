@@ -1,32 +1,11 @@
 import React, {ComponentType} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../redux/ProfileReducer";
-import {RootState} from "../../redux/redux-store";
+import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../state/ProfileReducer";
+import {RootState} from "../../state/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
-
-export type ProfileContainerStateType = {
-    profile: ProfileType | null
-    status: string
-    autorizedUserID: string | null
-    isAuth: boolean
-}
-
-type ProfileContainerDispatchType = {
-    getUserProfile: (userID: string) => void
-    getStatus: (userID: string) => void
-    updateStatus: (status: string) => void
-}
-
-type ProfileContainerPropsType = ProfileContainerStateType & ProfileContainerDispatchType
-
-type PathParamsType = {
-    userID: string
-}
-
-type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
 
 class ProfileContainer extends React.Component<PropsType, RootState> {
 
@@ -56,12 +35,26 @@ const mapStateToProps = (state: RootState): ProfileContainerStateType => ({
     isAuth: state.auth.isAuth
 })
 
-// const profileContainerWithURL = withRouter(ProfileContainer);
-
-// export default withAuthRedirect(connect(mapStateToProps, {getUserProfile})(profileContainerWithURL))
-
 export default compose<ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
         withRouter,
         withAuthRedirect
     )(ProfileContainer)
+
+//types
+type ProfileContainerStateType = {
+    profile: ProfileType | null
+    status: string
+    autorizedUserID: string | null
+    isAuth: boolean
+}
+type ProfileContainerDispatchType = {
+    getUserProfile: (userID: string) => void
+    getStatus: (userID: string) => void
+    updateStatus: (status: string) => void
+}
+type ProfileContainerPropsType = ProfileContainerStateType & ProfileContainerDispatchType
+type PathParamsType = {
+    userID: string
+}
+type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType

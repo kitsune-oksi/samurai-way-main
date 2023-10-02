@@ -1,4 +1,4 @@
-import {PostType} from "../../../redux/ProfileReducer";
+import {PostType} from "../../../state/ProfileReducer";
 
 type PostsPropsType = {
     posts: PostType[]

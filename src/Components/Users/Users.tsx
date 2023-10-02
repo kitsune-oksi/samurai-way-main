@@ -1,6 +1,6 @@
 import userPhoto from '../../assets/images/user.png'
 import React from "react";
-import {UserType} from "../../redux/UsersReducer";
+import {UserType} from "../../state/UsersReducer";
 import styles from './User.module.css'
 import {NavLink} from "react-router-dom";
 
@@ -49,11 +49,11 @@ export const Users: React.FC<UsersPropsType> = ({
                 </div>
                 <div>
                     {u.followed ? <button disabled={followingProgress.some((id) => id === u.id)} onClick={() => {
-                            follow(u.id)
+                            unfollow(u.id)
                         }}
                         >Unfollow</button> :
                         <button disabled={followingProgress.some(id => id === u.id)} onClick={() => {
-                            unfollow(u.id)
+                            follow(u.id)
                         }
                         }>Follow</button>}
                 </div>
