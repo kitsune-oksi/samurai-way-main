@@ -5,3 +5,7 @@
 .selectedPage {
     font-weight: bold;
 }
+
+.paginator {
+    cursor: pointer;
+}
