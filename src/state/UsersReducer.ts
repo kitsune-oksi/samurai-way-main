@@ -11,7 +11,7 @@ const SET_FOLLOWING_PROGRESS = 'usersPage/SET_FOLLOWING_PROGRESS';
 
 const initialState: UsersPageType = {
     users: [],
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 19,
     currentPage: 1,
     isFetching: true,
