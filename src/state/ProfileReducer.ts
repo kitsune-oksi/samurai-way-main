@@ -4,7 +4,8 @@ import {profileAPI} from "../api/profile.api";
 const ADD_POST = 'profilePage/ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'profilePage/UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE';
-const SET_USER_STATUS = 'profilePage/SET_USER_STATUS'
+const SET_USER_STATUS = 'profilePage/SET_USER_STATUS';
+const UPDATE_PHOTO_SUCCESS = 'profilePage/UPDATE_PHOTO_SUCCESS';
 
 const initialState: ProfilePageType = {
     posts: [
@@ -29,6 +30,8 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Ac
             return {...state, profile: action.payload.profile}
         case SET_USER_STATUS:
             return {...state, status: action.payload.status}
+        case UPDATE_PHOTO_SUCCESS:
+            return {...state, profile: {...state.profile, photos: action.payload.photos}}
         default:
             return state
     }
@@ -55,6 +58,12 @@ const setStatus = (status: string) => ({
         status
     }
 } as const)
+const updatePhotoSuccess = (photos: Photos) => ({
+    type: UPDATE_PHOTO_SUCCESS,
+    payload: {
+        photos
+    }
+} as const)
 
 //TC
 export const getUserProfile = (userID: string) => async (dispatch: Dispatch<ActionType>) => {
@@ -69,6 +78,13 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch<Action
     const res = await profileAPI.setStatus(status);
     if (res.resultCode === 0) {
         dispatch(setStatus(status));
+    }
+}
+export const updatePhoto = (photo: File) => async (dispatch: Dispatch<ActionType>) => {
+    const res = await profileAPI.setPhoto(photo);
+    debugger
+    if (res.resultCode === 0) {
+        dispatch(updatePhotoSuccess(res.data.photos));
     }
 }
 
@@ -90,15 +106,16 @@ export type ProfileType = {
     fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
-    photos:
-        {
-            small: string | null
-            large: string | null
-        }
+    photos: Photos
     userId: string
+}
+type Photos = {
+    small: string | null
+    large: string | null
 }
 type ActionType =
     ReturnType<typeof addPost> |
     ReturnType<typeof updateNewPost> |
     ReturnType<typeof setUserProfile> |
-    ReturnType<typeof setStatus>
+    ReturnType<typeof setStatus> |
+    ReturnType<typeof updatePhotoSuccess>
