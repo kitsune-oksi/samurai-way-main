@@ -14,5 +14,11 @@ export const profileAPI = {
     setStatus(status: string) {
         return instance.put<AxiosResponse<BaseResponseType>>(`profile/status`, {status})
             .then(res => res.data)
+    },
+    setPhoto(photoFile: File) {
+        const formData = new FormData();
+        formData.append('image', photoFile)
+        return instance.put<AxiosResponse<BaseResponseType<{ photos: { small: string, large: string } }>>>(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(res => res.data)
     }
 }
