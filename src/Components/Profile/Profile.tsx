@@ -4,11 +4,11 @@ import {MyPostsContainer} from "./Posts/MyPostsContainer";
 import {ProfileType} from "../../state/ProfileReducer";
 
 export type ProfilePropsType = {
-    profile: ProfileType | null
+    profile: ProfileType
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
-    updatePhoto: (photo: any) => void
+    updatePhoto: (photo: File) => void
 }
 
 export const Profile: React.FC<ProfilePropsType> = ({profile, status, updateStatus, isOwner, updatePhoto}) => {
