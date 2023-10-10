@@ -12,8 +12,9 @@ type Props = {
 export const ProfilePhoto: React.FC<Props> = ({profile, isOwner, updatePhoto}) => {
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            updatePhoto(e.target.files[0])
+        const {target:{files}} = e;
+        if (files && files[0]) {
+            updatePhoto(files[0])
         }
     }
 

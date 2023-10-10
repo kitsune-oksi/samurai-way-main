@@ -20,5 +20,9 @@ export const profileAPI = {
         formData.append('image', photoFile)
         return instance.put<AxiosResponse<BaseResponseType<{ photos: { small: string, large: string } }>>>(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
             .then(res => res.data)
+    },
+    setDescription(descriptionModel: ProfileType) {
+        return instance.put<AxiosResponse<BaseResponseType>>(`profile`, descriptionModel)
+            .then(res => res.data)
     }
 }
