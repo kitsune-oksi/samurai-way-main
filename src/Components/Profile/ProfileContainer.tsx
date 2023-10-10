@@ -54,7 +54,7 @@ export default compose<ComponentType>(
 
 //types
 type ProfileContainerStateType = {
-    profile: ProfileType | null
+    profile: ProfileType
     status: string
     autorizedUserID: string | null
     isAuth: boolean
