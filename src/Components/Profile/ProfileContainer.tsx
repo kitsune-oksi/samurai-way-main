@@ -1,7 +1,14 @@
 import React, {ComponentType} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfile, ProfileType, updatePhoto, updateStatus} from "../../state/ProfileReducer";
+import {
+    getStatus,
+    getUserProfile,
+    ProfileType,
+    updateDescription,
+    updatePhoto,
+    updateStatus
+} from "../../state/ProfileReducer";
 import {RootState} from "../../state/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -35,7 +42,8 @@ class ProfileContainer extends React.Component<PropsType, RootState> {
 
     render() {
         return <Profile profile={this.props.profile} status={this.props.status}
-                        updateStatus={this.props.updateStatus} isOwner={!this.props.match.params.userID} updatePhoto={this.props.updatePhoto}/>;
+                        updateStatus={this.props.updateStatus} isOwner={!this.props.match.params.userID}
+                        updatePhoto={this.props.updatePhoto} updateDescription={this.props.updateDescription} getUserProfile={this.props.getUserProfile}/>;
     }
 }
 
@@ -47,7 +55,7 @@ const mapStateToProps = (state: RootState): ProfileContainerStateType => ({
 })
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, updatePhoto}),
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, updatePhoto, updateDescription}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
@@ -64,6 +72,7 @@ type ProfileContainerDispatchType = {
     getStatus: (userID: string) => void
     updateStatus: (status: string) => void
     updatePhoto: (photo: any) => void
+    updateDescription: (descriptionModel: ProfileType) => Promise<void>
 }
 type ProfileContainerPropsType = ProfileContainerStateType & ProfileContainerDispatchType
 type PathParamsType = {

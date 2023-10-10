@@ -82,10 +82,12 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch<Action
 }
 export const updatePhoto = (photo: File) => async (dispatch: Dispatch<ActionType>) => {
     const res = await profileAPI.setPhoto(photo);
-    debugger
     if (res.resultCode === 0) {
         dispatch(updatePhotoSuccess(res.data.photos));
     }
+}
+export const updateDescription = (descriptionModel: ProfileType) => () => {
+    return profileAPI.setDescription(descriptionModel)
 }
 
 //types
@@ -100,12 +102,21 @@ export type ProfilePageType = {
     status: string
 }
 export type ProfileType = {
-    aboutMe: string | null
+    aboutMe: string
     contacts:
-        { [key: string]: string | null }
+        {
+            facebook: string
+            github: string
+            instagram: string
+            mainLink: string
+            twitter: string
+            vk: string
+            website: string
+            youtube: string
+        }
     fullName: string
     lookingForAJob: boolean
-    lookingForAJobDescription: string | null
+    lookingForAJobDescription: string
     photos: Photos
     userId: string
 }
