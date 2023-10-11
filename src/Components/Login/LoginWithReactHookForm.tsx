@@ -10,17 +10,18 @@ import {login} from "../../state/AuthReducer";
 const schema = yup.object({
     email: yup.string().required().email(),
     password: yup.string().required(),
-    rememberMe: yup.boolean().default(false)
+    rememberMe: yup.boolean().default(false),
+    captcha: yup.string()
 })
 
-const Login:React.FC<LoginPropsType> = ({login, isAuth}) => {
+const Login:React.FC<LoginPropsType> = ({login, isAuth, captcha, stateErrors}) => {
 
     const {register, handleSubmit, formState: { errors }} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
 
-    const onSubmit: SubmitHandler<FormData > = ({email, password, rememberMe}) => {
-        login(email, password, rememberMe);
+    const onSubmit: SubmitHandler<FormData > = ({email, password, rememberMe, captcha}) => {
+        login(email, password, rememberMe, captcha);
     }
 
     if (isAuth) {
@@ -41,8 +42,12 @@ const Login:React.FC<LoginPropsType> = ({login, isAuth}) => {
             <div>
                 <input type={'checkbox'} {...register("rememberMe")}/> remember me
             </div>
+            {captcha && <div>
+                <img src={captcha} alt={'captcha'}/>
+                <input placeholder='Captcha' {...register('captcha')}/>
+            </div>}
             <div>
-                {errors && <p>{errors}</p>}
+                {stateErrors && <p>{stateErrors}</p>}
             </div>
             <div>
                 <button>Login</button>
@@ -55,18 +60,20 @@ const Login:React.FC<LoginPropsType> = ({login, isAuth}) => {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => ({
     isAuth: state.auth.isAuth,
-    errors: state.auth.errors
+    stateErrors: state.auth.errors,
+    captcha: state.auth.captcha
 })
 
 export default connect(mapStateToProps, {login})(Login)
 
 //types
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe?: boolean, captcha?: boolean) => void
+    login: (email: string, password: string, rememberMe?: boolean, captcha?: string) => void
 }
 type MapStateToPropsType = {
     isAuth: boolean
-    errors: null | string
+    stateErrors: null | string
+    captcha: null | string
 }
 type LoginPropsType = MapDispatchToPropsType & MapStateToPropsType;
 type FormData = yup.InferType<typeof schema>;

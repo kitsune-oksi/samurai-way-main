@@ -17,7 +17,7 @@ const mapStateToProps = (state: RootState):HeaderContainerStateType => ({
 
 })
 
-export default connect(mapStateToProps, {logOut: logout})(HeaderContainer)
+export default connect(mapStateToProps, {logout})(HeaderContainer)
 
 //types
 export type HeaderContainerStateType = {
