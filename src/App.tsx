@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./Components/Navbar/Navbar";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
@@ -31,15 +31,18 @@ class App extends React.Component<PropsType, RootState> {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className='app-content'>
-                        <React.Suspense fallback={<div><Preloader/></div>}>
-                            <Route path='/Profile/:userID?' render={() => <ProfileContainer/>}/>
-                            <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                            <Route path='/Users' render={() => <UsersContainer/>}/>
-                        </React.Suspense>
-                        <Route path='/News' render={() => <News/>}/>
-                        <Route path='/Music' render={() => <Music/>}/>
-                        <Route path='/Settings' render={() => <Settings/>}/>
-                        <Route path='/Login' render={() => <Login/>}/>
+                        <Switch >
+                            <Redirect exact from="/" to="/profile" />
+                            <React.Suspense fallback={<div><Preloader/></div>}>
+                                <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
+                                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                                <Route path='/users' render={() => <UsersContainer/>}/>
+                            </React.Suspense>
+                            <Route path='/news' render={() => <News/>}/>
+                            <Route path='/music' render={() => <Music/>}/>
+                            <Route path='/settings' render={() => <Settings/>}/>
+                            <Route path='/login' render={() => <Login/>}/>
+                        </Switch>
                     </div>
                 </div>
             </BrowserRouter>
