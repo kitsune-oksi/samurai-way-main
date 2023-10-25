@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/410.5f46b8a0.chunk.css","mappings":"AAAA,uBACI,UACJ,CAEA,0BACI,eACJ,CAEA,uBACI,cACJ","sources":["Components/Users/User.module.css"],"sourcesContent":[".userPhoto {\n    width: 70px\n}\n\n.selectedPage {\n    font-weight: bold;\n}\n\n.paginator {\n    cursor: pointer;\n}"],"names":[],"sourceRoot":""}
